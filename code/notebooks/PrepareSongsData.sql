@@ -26,21 +26,3 @@ SELECT
   current_timestamp()
 FROM
   pipeline_get_started_raw_song_data
-
--- COMMAND ----------
-
--- Find songs for your DJ list
- CREATE OR REPLACE VIEW
-   danceable_songs
- AS SELECT
-   artist_name,
-   title,
-   tempo
- FROM
-   pipeline_get_started_prepared_song_data
- WHERE
-   time_signature = 4
-   AND
-   tempo between 100 and 140;
-
- SELECT * FROM danceable_songs limit 100
