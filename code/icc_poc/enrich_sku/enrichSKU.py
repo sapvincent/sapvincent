@@ -1,5 +1,13 @@
 # Databricks notebook source
 # MAGIC %md
+# MAGIC <h1>Map service.id + service.plan + metric + region to SKU (Material Number)</h1>
+# MAGIC parse SLM metadata to mtGlobalServiceToMaterialMappingV2.0, refer CC - PAYG Business Models if CLUS do not commit to provide
+# MAGIC write to MTRA data area if CLUS do not provide
+# MAGIC for a dataFrame which has service.id + service.plan + metric + region fields, do lookup, fill with SKU field
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC this notebook is based on the option if CLUS provide a sku mapping table
 
 # COMMAND ----------
