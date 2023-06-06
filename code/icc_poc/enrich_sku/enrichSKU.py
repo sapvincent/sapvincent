@@ -29,7 +29,7 @@ df.show()
 
 from pyspark.sql.functions import explode
 
-# 将嵌套的数组展开
+# explode array node
 df_materials = df.select(explode("materials").alias("mara"))
 df_mappings = df_materials.select("mara.globalAccount", "mara.environment", "mara.region", "mara.service_id", "mara.service_plan", "mara.sku")
 
@@ -43,27 +43,27 @@ df_mappings.show(truncate=False)
 
 # COMMAND ----------
 
-# 导入Delta库
+# import delta table lib
 from delta.tables import *
 table_name = "aggregation_sum"
 
-# 定义Delta表路径
+# define delta table path
 delta_table_path = "/poc/" + table_name
-# 读取Delta表
+# read data table
 delta_table = DeltaTable.forPath(spark, delta_table_path)
 
-# 使用Delta API读取数据
+# convert delta table to dataframe
 df_agg_sum = delta_table.toDF()
 
-# 显示DataFrame数据
+# show dataframe
 df_agg_sum.show(truncate=False)
 
 # COMMAND ----------
 
-# 执行连接操作
+# join mapping table with aggregated result, so that the sku can be enriched to the aggregation result
 joined_df = df_mappings.join(df_agg_sum, on=["globalAccount", "environment", "service_id", "service_plan", "region"], how="inner")
 
-# 显示连接结果
+# show result
 joined_df.show()
 
 
@@ -76,8 +76,8 @@ joined_df.show()
 
 table_name = "enriched_aggregation_sum"
 
-# 定义Delta表路径
+# define delta table path
 delta_table_path = "/poc/" + table_name
 
-# 将DataFrame写入Delta表
+# write dataframe into delta table
 joined_df.write.format("delta").mode("overwrite").option("mergeSchema", "true").save(delta_table_path)

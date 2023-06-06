@@ -31,23 +31,23 @@ df = spark.read.format(file_type).option("inferSchema", "true").option("multiLin
 
 # COMMAND ----------
 
-# 导入Delta库
+# import delta table lib
 from delta.tables import *
 table_name = "aggregation_usage"
 
-# 定义Delta表路径
+# define delta table path
 delta_table_path_raw_usage = "/poc/" + table_name
 
-# 将DataFrame写入Delta表
+# write data frame into a delta table with overwrite mode
 df.write.format("delta").mode("overwrite").save(delta_table_path_raw_usage)
 
 # COMMAND ----------
 
 raw_usage_delta = DeltaTable.forPath(spark, "/poc/aggregation_usage")
 
-# 使用Delta API读取数据
+# convert delta table data to dataframe
 df_raw_usage = raw_usage_delta.toDF()
 
-# 显示DataFrame数据
+# show dataframe
 df_raw_usage.show()
 
