@@ -1,11 +1,10 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC Load and aggregate raw usage events in a given month (further breakdown), introduce pipeline per aggregation routine. Examples: 1. Do monthly aggregations per subAccount (SUM,MAX,AVG...), then do monthly aggregation on globalAccountLevel (MAX,SUM,AVG) 2. globalAccount aggregation SUM without intermediate aggregations 3. distinct Users
-# MAGIC if CLUS do not provide, parse SLM information to generate mtGlobalConversionRulesMappingV2.0, refer  CC - PAYG Business Models Zhang, Zhaoyu 
-# MAGIC based on metric conversion rules, do required intermediate aggregations for each product, original input is raw usage files, output is intermediate level aggregations(e.g. subAccount level)
-# MAGIC write intermediate aggregations to MTRA
-# MAGIC based on intermediate aggregations, calculate final usage, i.e. SKU blocks in global Account level, take MonthToDate(from month begin to today) as billCycle, do aggregation everyday
-# MAGIC write aggregations dataFrame to MTRA data area as delta table
+# MAGIC <h2>Load and aggregate raw usage events in a given month (further breakdown), introduce pipeline per aggregation routine.</h2>
+# MAGIC Examples: 
+# MAGIC - 1. Do monthly aggregations per subAccount (SUM,MAX,AVG...), then do monthly aggregation on globalAccountLevel (MAX,SUM,AVG)
+# MAGIC - 2. globalAccount aggregation SUM without intermediate aggregations 
+# MAGIC - 3. distinct Users if CLUS do not provide, parse SLM information to generate mtGlobalConversionRulesMappingV2.0, refer CC - PAYG Business Models Zhang, Zhaoyu based on metric conversion rules, do required intermediate aggregations for each product, original input is raw usage files, output is intermediate level aggregations(e.g. subAccount level) write intermediate aggregations to MTRA based on intermediate aggregations, calculate final usage, i.e. SKU blocks in global Account level, take MonthToDate(from month begin to today) as billCycle, do aggregation everyday write aggregations dataFrame to MTRA data area as delta table
 
 # COMMAND ----------
 
